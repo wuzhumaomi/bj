@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjasoft.pmis.mybatis.extend.dao.BugDao">
+    <resultMap id="BaseResultMap" type="com.sjasoft.pmis.mybatis.extend.entity.Bug" extends="com.sjasoft.pmis.mybatis.generate.dao.TProjectBugDao.BaseResultMap">
+        <result property="projectName" column="projectName" jdbcType="VARCHAR"/>
+        <result property="demandName" column="demandName" jdbcType="VARCHAR"/>
+        <result property="moduleName" column="moduleName" jdbcType="VARCHAR"/>
+        <result property="projectTaskName" column="projectTaskName" jdbcType="VARCHAR"/>
+        <result property="fullName" column="fullName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+  <select id="getBugList" resultMap="BaseResultMap">
+    SELECT
+        bug.*, project.PRO_NM AS projectName,
+        demand.DEMAND_NM AS demandName,
+        tmodule.MOD_NM AS moduleName,
+        task.TASK_NM AS projectTaskName,
+        person.fullname AS fullName
+    FROM
+        t_project_bug bug
+    LEFT JOIN t_project project ON project.ID = bug.PRO_ID
+    LEFT JOIN t_project_demand demand ON demand.ID = bug.DEMAND_ID
+    LEFT JOIN t_project_module tmodule ON tmodule.ID = bug.MOD_ID
+    LEFT JOIN t_progress_management task ON task.ID = bug.TASK_ID
+    LEFT JOIN vis_person person ON person.ID = bug.RECEIVER
+      <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="proId != null and proId != ''">
+          AND bug.PRO_ID = #{proId}
+      </if>
+          <if test="taskName != null and taskName!= ''">
+              <bind name="taskNames" value="'%' + taskName + '%'"/>
+              AND bug.TASK_NAME LIKE #{taskNames}
+          </if>
+          <if test="personName != null and personName!= ''">
+              <bind name="personNames" value="'%' + personName + '%'"/>
+              AND person.fullname LIKE #{personNames}
+          </if>
+          <if test="creator != null and creator!= ''">
+              <bind name="creators" value="'%' + creator + '%'"/>
+              AND bug.CREATOR LIKE #{creators}
+          </if>
+          <if test="createTime != null">
+              AND bug.CREATE_TIME = #{createTime}
+          </if>
+          <if test="item != null">
+            AND bug.BUG_STATUS IN
+            <foreach collection="item" index="index" item="item" open="(" separator="," close= ")">
+                #{item}
+            </foreach>
+          </if>
+          AND bug.IS_ENABLED = '1'
+
+      </trim>
+    ORDER BY CASE
+                    WHEN bug.BUG_STATUS = '3' THEN
+                    bug.BUG_STATUS
+                END ASC,
+                CASE
+                    WHEN bug.BUG_STATUS = '3' THEN
+                    bug.PRIORITY_LEVEL
+                END ASC,
+                CASE
+                    WHEN bug.BUG_STATUS != '3' THEN
+                    bug.PRIORITY_LEVEL
+                END ASC,
+                CASE
+                    WHEN bug.BUG_STATUS != '3' THEN
+                    bug.BUG_STATUS
+                END ASC,bug.CREATE_TIME DESC
+  </select>
+
+  <select id="getBugById" resultMap="BaseResultMap">
+    SELECT
+        bug.*,
+        project.PRO_NM AS projectName,
+        demand.DEMAND_NM AS demandName,
+        tmodule.MOD_NM AS moduleName,
+        task.TASK_NM AS projectTaskName,
+        person.fullname AS fullName
+    FROM
+        t_project_bug bug
+    LEFT JOIN t_project project ON project.ID = bug.PRO_ID
+    LEFT JOIN t_project_demand demand ON demand.ID = bug.DEMAND_ID
+    LEFT JOIN t_project_module tmodule ON tmodule.ID = bug.MOD_ID
+    LEFT JOIN t_progress_management task ON task.ID = bug.TASK_ID
+    LEFT JOIN vis_person person ON person.ID = bug.RECEIVER
+    WHERE
+        bug.ID = #{id}
+  </select>
+
+</mapper>
