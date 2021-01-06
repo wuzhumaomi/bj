@@ -272,8 +272,9 @@ vue.config.js 》》 devServer 》》proxy
         :value="item.value"
       />
     </el-select>
-    <div :selectValue='selectValue'  v-if="selectType == 'text'">
-      {{selectValue|getValue(name,select)}}
+
+    <div  v-if="selectType == 'text'" >
+      {{value|getValue(name,select)}}
     </div>
   </div>
 </template>
@@ -299,13 +300,13 @@ export default {
         select:{
           // 检查状态,1为通过,2为口头警告,3为书面整改
           checkResultStatus: [{
-            value: '1',
+            value: 1,
             label: '通过'
           }, {
-            value: '2',
+            value: 2,
             label: '口头警告'
           }, {
-            value: '3',
+            value: 3,
             label: '书面整改'
           }],
           // 选择框
@@ -316,7 +317,15 @@ export default {
             value: '选项2',
             label: '选项2-1'
           }],
-
+          // 使用状态,0为未使用过,1未使用过
+          useStatus: [{
+            value: 0,
+            label: '未使用过'
+          }, {
+            value: 1,
+            label: '使用过'
+          }],
+          
 
         }
 
@@ -327,7 +336,6 @@ export default {
     selectValue:{	//editForm》》》》》》》》》》》》属性名
       handler:function(val,oldval){
               //val》》》》》》》》》》》》新的值
-          console.log("mounted >>>>>>>> ",val,oldval )
           // this.value = this.selectValue
           this.$emit('update:value', this.selectValue) // 父组件中的show会被同步更改成true
       },
@@ -338,7 +346,6 @@ export default {
     getValue(selectValue,name,select){ 
      for (const item of select[name]) {
         if (item.value == selectValue ){
-          console.log(item.label);
           return item.label
         }
      }
