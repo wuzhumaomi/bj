@@ -180,3 +180,15 @@ git push ssh://example.com/~/www/project.git
 打开码云，点加号创建新的仓库，导入已有仓库
 
 服务 》 gitee Pages 》 启动
+
+# 报错
+
+warning: LF will be replaced by CRLF in 使用的文件/complex-table.vue.
+The file will have its original line endings in your working directory
+
+```
+出现warning: LF will be replaced by CRLF是换行符的原因，解决办法很简单，一行代码，如下配置：
+
+git config --global core.autocrlf false
+```
+
