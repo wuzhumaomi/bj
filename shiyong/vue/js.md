@@ -6,7 +6,11 @@
 delete 对象.属性
 ```
 
+## 两个对象只赋值自己需要的属性
 
+```
+Object.keys(obj2).forEach(key=>{obj2[key]=obj1[key]})
+```
 
 # 数组
 
@@ -465,6 +469,9 @@ Math.round(i.dataValue*100)/100
 System.out.println("绝对值：" + Math.abs(-521));
 
 //521
+
+// 丢弃小数部分,保留整数部分
+parseInt(7/2)　　// 3
 
 System.out.println("向上取整再转double" + Math.ceil(23.991)+ Math.ceil(-23.002));
 

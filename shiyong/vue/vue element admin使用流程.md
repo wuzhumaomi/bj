@@ -1,3 +1,5 @@
+
+
 # 使用方针
 
 一、本就以方便来，那就以方便来用，不如直接用集成的
@@ -85,6 +87,33 @@ src\layout\components\Navbar.vue
 
 ```
 
+```
+
+## 浏览器图标与标头
+
+### 标头
+
+两个地方可以改
+
+1.settings.js
+
+```
+module.exports = {
+  title: '施工企业管理平台',
+```
+
+2.vue.config.js
+
+```
+const name = defaultSettings.title || 'vue Element Admin' // page title
+```
+
+### 图标
+
+更换public/favicon.ico
+
+```
+ <link rel="icon" href="<%= BASE_URL %>favicon.ico">
 ```
 
 

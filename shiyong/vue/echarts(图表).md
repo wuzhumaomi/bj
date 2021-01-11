@@ -345,6 +345,7 @@ series 》 { 》
                 length: 10,
                 length2: 20
             },
+
 ```
 
 字换行
@@ -364,5 +365,61 @@ series 》 { 》
             return str
           }
         },
+```
+
+## 饼形图中间放字
+
+```
+// 指定图表的配置项和数据
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            color:["#27D9C8","#D8D8D8"],
+            title:{
+                text:"80%",
+                left:"center",
+                top:"50%",
+                textStyle:{
+                    color:"#27D9C8",
+                    fontSize:36,
+                    align:"center"
+                }
+            },
+            graphic:{
+                type:"text",
+                left:"center",
+                top:"40%",
+                style:{
+                    text:"运动达标率",
+                    textAlign:"center",
+                    fill:"#333",
+                    fontSize:20,
+                    fontWeight:700
+                }
+            },
+            series: [
+                {
+                    name: '运动情况',
+                    type: 'pie',
+                    radius: ['65%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                       
+                    },
+                    
+                    data: [
+                        { value: 80, name: '已完成' },
+                        { value: 20, name: '未完成' },
+                       
+                    ]
+                }
+            ]
+        };
 ```
 

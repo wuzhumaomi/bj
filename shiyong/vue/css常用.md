@@ -107,6 +107,9 @@ background-size: length|percentage|cover|contain;
 
 ```
  <img :src="require('@/assets/img/renYuan.png')" class="user-avatar">
+ 
+ 
+      background-image: url('~@/assets/login/background-image.png');
 ```
 
 ## 背景图片属性值

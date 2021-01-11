@@ -60,6 +60,16 @@ ps: git branch 列出您的计算机上Demo库中的所有分支
 
 ### 9.忽视
 
+.gitignore
+
+ps:直接在里面写这个文件夹的名字好像就好了
+
+```
+node_modules
+```
+
+
+
 ```
 使用.gitignore
 在.git 同级目录下创建.gitignore
@@ -75,6 +85,8 @@ git commit -m ‘update .gitignore’
 
 一般也会忽略.gitignore
 ```
+
+
 
 ### 10、删除仓库
 
@@ -162,3 +174,9 @@ git commit -a -m "Changed some files"
 ```
 git push ssh://example.com/~/www/project.git
 ```
+
+# 太慢太卡-码云
+
+打开码云，点加号创建新的仓库，导入已有仓库
+
+服务 》 gitee Pages 》 启动
